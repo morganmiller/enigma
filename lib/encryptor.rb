@@ -6,9 +6,9 @@ class Encryptor
 
   def initialize(message_to_encrypt, key = KeyOffset.new.key, date = DateOffset.new.date)
     @message_to_encrypt = message_to_encrypt
-    @key = key
     @date = date
-    @rotator = Rotator.new(@key, @date)
+    @rotator = Rotator.new(@date)
+    @key = @rotator.set_key(key)
   end
 
   def group_by_4
@@ -17,7 +17,7 @@ class Encryptor
 
   def rotate_chars
     group_by_4.map do |group|
-      @rotator.rotate_for_encryption(group)
+      @rotator.rotate_for_encryption(group, @rotator.total_offsets)
     end
   end
 

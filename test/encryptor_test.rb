@@ -15,17 +15,17 @@ class EncryptorTest < Minitest::Test
 
   def test_it_groups_string_of_4
     encryptor = Encryptor.new('ruby', '41521', '020315')
-    assert_equal [["r", "u", "b", "y"]], encryptor.chars_grouped_by_4
+    assert_equal [["r", "u", "b", "y"]], encryptor.group_by_4
   end
 
   def test_it_groups_string_of_8
     encryptor = Encryptor.new('rubylove', '41521', '020315')
-    assert_equal [["r", "u", "b", "y"], ['l', 'o', 'v', 'e']], encryptor.chars_grouped_by_4
+    assert_equal [["r", "u", "b", "y"], ['l', 'o', 'v', 'e']], encryptor.group_by_4
   end
 
   def test_it_groups_string_of_9
     encryptor = Encryptor.new('ruby love', '41521', '020315')
-    assert_equal [["r", "u", "b", "y"], [" ", "l", "o", "v"], ["e"]], encryptor.chars_grouped_by_4
+    assert_equal [["r", "u", "b", "y"], [" ", "l", "o", "v"], ["e"]], encryptor.group_by_4
   end
 
   def test_it_rotates_string_of_4
@@ -46,6 +46,18 @@ class EncryptorTest < Minitest::Test
   def test_it_encrypts_message
     encryptor = Encryptor.new('ruby love', '41521', '020315')
     assert_equal "2.qli23ip", encryptor.encrypted_message
+  end
+
+  def test_eugenes_code
+    skip
+    encryptor = Encryptor.new('h', '41512', '020315')
+    assert_equal 'j', encryptor.encrypted_message
+  end
+
+  def test_michaels_code
+    skip
+    encryptor = Encryptor.new('hello world', '58241', '041515')
+    assert_equal '', encryptor.encrypted_message
   end
 
 end

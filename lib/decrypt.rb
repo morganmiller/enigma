@@ -36,7 +36,12 @@ class Decrypt
     file = File.open(self.output_file, "w")
     file.write(self.decrypt_the_message(self.input_file))
   end
+
+  def self.print
+    self.write_to_file
+    puts "Created #{self.output_file} with the key #{self.key} and date #{self.date}"
+  end
 end
 
-Decrypt.write_to_file
+Decrypt.print
 

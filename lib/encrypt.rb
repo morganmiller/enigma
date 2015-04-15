@@ -9,12 +9,12 @@ class Encrypt
   #Separate file for argument errors?
 
   def self.input_file
-    raise ArgumentError, "I need a file to read!" if ARGV[0] == nil #|| ARGV[0] != #filetype?
+    # raise ArgumentError, "I need a file to read!" if ARGV[0] == nil #|| ARGV[0] != #filetype?
     ARGV[0]
   end
 
   def self.output_file
-    raise ArgumentError, "I need a file to write to!" if ARGV[1] == nil #|| ARGV[1] != #filetype?
+    # raise ArgumentError, "I need a file to write to!" if ARGV[1] == nil #|| ARGV[1] != #filetype?
     ARGV[1]
   end
 
@@ -37,10 +37,10 @@ class Encrypt
     file.write(@encryptor.date)
   end
 
+  def self.print
+    self.write_to_file
+    puts "Created #{self.output_file} with the key #{@encryptor.key} and the date #{@encryptor.date}"
+  end
 end
 
-Encrypt.write_to_file
-
-#How to write to file and add new line without ^ format
-#How to read and check if empty, first
-#Print messages after writing to file
+Encrypt.print

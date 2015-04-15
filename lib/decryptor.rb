@@ -4,9 +4,9 @@ class Decryptor
 
   def initialize(message_to_decrypt, key, date)
     @message_to_decrypt = message_to_decrypt
-    @key = key
     @date = date
-    @rotator = Rotator.new(@key, @date)
+    @rotator = Rotator.new(@date)
+    @key = @rotator.set_key(key)
   end
 
   def group_by_4
@@ -15,7 +15,7 @@ class Decryptor
 
   def rotate_chars
     group_by_4.map do |group|
-      @rotator.rotate_for_decryption(group)
+      @rotator.rotate_for_decryption(group, @rotator.total_offsets)
     end
   end
 
