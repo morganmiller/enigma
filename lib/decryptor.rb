@@ -9,12 +9,12 @@ class Decryptor
     @rotator = Rotator.new(@key, @date)
   end
 
-  def chars_grouped_by_4
-    @message_to_decrypt.chars.each_slice(4).map { |char| char }
+  def group_by_4
+    @rotator.chars_grouped_by_4(@message_to_decrypt)
   end
 
   def rotate_chars
-    chars_grouped_by_4.map do |group|
+    group_by_4.map do |group|
       @rotator.rotate_for_decryption(group)
     end
   end

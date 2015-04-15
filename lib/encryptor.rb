@@ -11,12 +11,12 @@ class Encryptor
     @rotator = Rotator.new(@key, @date)
   end
 
-  def chars_grouped_by_4
-    @message_to_encrypt.chars.each_slice(4).map { |char| char }
+  def group_by_4
+    @rotator.chars_grouped_by_4(@message_to_encrypt)
   end
 
   def rotate_chars
-    chars_grouped_by_4.map do |group|
+    group_by_4.map do |group|
       @rotator.rotate_for_encryption(group)
     end
   end

@@ -16,6 +16,10 @@ class Rotator
     offsets.total_offsets
   end
 
+  def chars_grouped_by_4(message)
+    message.chars.each_slice(4).map { |char| char }
+  end
+
   def rotate_for_encryption(array_of_chars)
     array_of_chars.map.with_index do |char, index|
       rotator_array[((rotator_array.index(char) + total_offsets[index]) % 39)]
@@ -29,3 +33,5 @@ class Rotator
   end
 
 end
+
+#To use rotator with cracker, key can't be initialized with class.
