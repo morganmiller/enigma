@@ -32,7 +32,6 @@ class Cracker
       key_count
       decryptor = Decryptor.new(@original, @key, @date)
       @message_to_crack = decryptor.decrypted_message
-      puts @key
       break if break?
     end
     @message_to_crack
