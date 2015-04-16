@@ -5,7 +5,7 @@ class KeyOffset
   end
 
   def generate_random_key
-    @key = rand(100000).to_s
+    @key = rand(10000..99999).to_s
   end
 
   def key

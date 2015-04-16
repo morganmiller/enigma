@@ -1,57 +1,41 @@
-require_relative 'rotator'
-# require 'pry'
+require_relative 'decryptor'
+require 'pry'
 
 class Cracker
 
+  attr_reader :key
+
   def initialize(message_to_crack, date)
+    @original = message_to_crack
     @message_to_crack = message_to_crack
     @date = date
-    @rotator = Rotator.new(date)
+    @key = '9999'
   end
 
-  def starting_index
-    ((@message_to_crack.length - 7) % 4)
+  def matching_phrase?
+    matching_phrase = '..end..'
+    @message_to_crack[-7..-1] == matching_phrase
   end
 
-  def encrypted_end_message
-    @message_to_crack[-7..-1]
+  def break?
+    @key == '99999'
   end
 
-  def encrypted_message_abcd
-    msg_map = []
-    msg_map << encrypted_end_message[starting_index]
-    msg_map << encrypted_end_message[starting_index + 1]
-    msg_map << encrypted_end_message[starting_index + 2]
-    msg_map << encrypted_end_message[starting_index + 3]
-    msg_map
+  def key_count
+    current_key = @key.to_i
+    new_key = current_key += 1
+    @key = new_key.to_s
   end
 
-  def end_message_abcd
-    arr = '..end..'.chars
-    end_map = []
-    end_map << arr[starting_index]
-    end_map << arr[starting_index + 1]
-    end_map << arr[starting_index + 2]
-    end_map << arr[starting_index + 3]
-    end_map
-  end
-
-  def cracked_total_offsets
-    @rotator.cracked_offsets(end_message_abcd, encrypted_message_abcd)
-  end
-
-  def group_by_4
-    @rotator.chars_grouped_by_4(@message_to_crack)
-  end
-
-  def rotate_chars
-    group_by_4.map do |group|
-      @rotator.rotate_for_encryption(group, cracked_total_offsets)
+  def crack
+    until matching_phrase?
+      key_count
+      decryptor = Decryptor.new(@original, @key, @date)
+      @message_to_crack = decryptor.decrypted_message
+      puts @key
+      break if break?
     end
+    @message_to_crack
   end
-
 
 end
-#
-# cracker = Cracker.new("hx,dcc629h6w", "150415")
-# assert_equal [10,20,30,40], cracker.rotate_chars
