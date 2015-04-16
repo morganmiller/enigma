@@ -37,4 +37,5 @@ class Rotator
     end
   end
 
+
 end

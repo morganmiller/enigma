@@ -1,4 +1,4 @@
-require 'pry'
+
 require_relative 'cracker'
 require_relative 'printer'
 
@@ -17,7 +17,6 @@ class Crack < Printer
   def self.decrypt_the_message(input_file)
     cracker = Cracker.new(self.retrieve_message(input_file), self.date)
     @cracked_message = cracker.crack
-    binding.pry
     @key = cracker.key
   end
 
