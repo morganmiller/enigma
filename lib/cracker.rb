@@ -5,6 +5,7 @@ class Cracker
   attr_accessor :key
 
   def initialize(message_to_crack, date)
+    @original = message_to_crack
     @message_to_crack = message_to_crack
     @date = date
     @rotator = Rotator.new(date)
@@ -25,11 +26,11 @@ class Cracker
       current_key = @key.to_i
       new_key = current_key += 1
       @key = new_key.to_s
-      decryptor = Decryptor.new(@message_to_crack, @key, @date)
-      decryptor.decrypted_message
+      decryptor = Decryptor.new(@original, @key, @date)
+      @message_to_crack = decryptor.decrypted_message
       break if break?
     end
-    puts @key
+    @key
   end
 
 
@@ -77,8 +78,8 @@ class Cracker
 end
 
 #works = mytest..end..
-cracker = Cracker.new(" hx,dcc629h6w", "150415")
-puts cracker.crack
+# cracker = Cracker.new(" hx,dcc629h6w", "150415")
+# puts cracker.crack
 #
 # #works = mytest2222..end..
 # cracker2 = Cracker.new("g7t4m22pw..y.wdy5", "150415")
