@@ -1,6 +1,9 @@
 require_relative 'rotator'
+require 'pry'
 
 class Decryptor
+
+  attr_reader :message_to_decrypt, :date, :key
 
   def initialize(message_to_decrypt, key, date)
     @message_to_decrypt = message_to_decrypt

@@ -16,6 +16,11 @@ class DateOffsetTest < Minitest::Test
     assert_equal 20315, date_offset.date
   end
 
+  def test_it_squares_anything
+    date_offset = DateOffset.new('2')
+    assert_equal 4, date_offset.squared_date
+  end
+
   def test_it_squares_the_date
     date_offset = DateOffset.new('020315')
     assert_equal 412699225, date_offset.squared_date
@@ -25,5 +30,6 @@ class DateOffsetTest < Minitest::Test
     date_offset = DateOffset.new('020315')
     assert_equal [9,2,2,5], date_offset.date_offsets
   end
+
 
 end

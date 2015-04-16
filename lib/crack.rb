@@ -25,7 +25,7 @@ class Crack
 
   def self.decrypt_the_message(input_file)
     cracker = Cracker.new(self.message_to_crack(input_file), self.date)
-    @cracked_message = cracker.decrypt_it
+    @cracked_message = cracker.crack
     @key = cracker.key
   end
 
