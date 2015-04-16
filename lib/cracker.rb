@@ -21,11 +21,15 @@ class Cracker
     @key == '99999'
   end
 
+  def key_count
+    current_key = @key.to_i
+    new_key = current_key += 1
+    @key = new_key.to_s
+  end
+
   def crack
     until matching_phrase?
-      current_key = @key.to_i
-      new_key = current_key += 1
-      @key = new_key.to_s
+      key_count
       decryptor = Decryptor.new(@original, @key, @date)
       @message_to_crack = decryptor.decrypted_message
       break if break?
