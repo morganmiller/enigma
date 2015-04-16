@@ -5,9 +5,6 @@ require './lib/encryptor'
 
 class EncryptorTest < Minitest::Test
 
-  #test it takes key,date
-  #test it generates random key, date
-
   def test_it_generates_random_key
     encryptor = Encryptor.new('ruby')
     assert encryptor.key.length == 5
@@ -49,15 +46,13 @@ class EncryptorTest < Minitest::Test
   end
 
   def test_eugenes_code
-    skip
     encryptor = Encryptor.new('h', '41512', '020315')
-    assert_equal 'j', encryptor.encrypted_message
+    assert_equal "s", encryptor.encrypted_message
   end
 
   def test_michaels_code
-    skip
     encryptor = Encryptor.new('hello world', '58241', '041515')
-    assert_equal '', encryptor.encrypted_message
+    assert_equal "5k.s,djvcr3", encryptor.encrypted_message
   end
 
 end

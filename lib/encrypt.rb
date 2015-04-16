@@ -1,35 +1,21 @@
 require_relative 'encryptor'
+require_relative 'printer'
 
-class Encrypt
+class Encrypt < Printer
 
-  #use class methods, not initialize
-  #are instance variables storing information about the state?
-     #if not, not instance vars
-
-  #Separate file for argument errors?
-
-  def self.input_file
-    # raise ArgumentError, "I need a file to read!" if ARGV[0] == nil #|| ARGV[0] != #filetype?
-    ARGV[0]
+  def self.check_for_errors
+    if ARGV.length != 2
+      self.incorrect_num_arguments_encrypt
+    end
   end
 
-  def self.output_file
-    # raise ArgumentError, "I need a file to write to!" if ARGV[1] == nil #|| ARGV[1] != #filetype?
-    ARGV[1]
-  end
-
-  def self.message_to_encrypt(input_file = "message.txt")
-    file = File.open(input_file, "r")
-    file.read.chomp
-  end
-
-  def self.encrypt_the_message(input_file = "message.txt")
-    @encryptor = Encryptor.new(self.message_to_encrypt(input_file))
+  def self.encrypt_the_message(input_file)
+    @encryptor = Encryptor.new(self.retrieve_message(input_file))
     @encryptor.encrypted_message
   end
 
   def self.write_to_file
-    file = File.open(self.output_file, "w")
+    file = self.get_ready_to_write(self.output_file)
     file.write(self.encrypt_the_message(self.input_file))
     file.write ("\n")
     file.write(@encryptor.key)
@@ -38,6 +24,7 @@ class Encrypt
   end
 
   def self.print
+    self.check_for_errors
     self.write_to_file
     puts "Created #{self.output_file} with the key #{@encryptor.key} and the date #{@encryptor.date}"
   end

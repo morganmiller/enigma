@@ -1,41 +1,34 @@
 require 'pry'
 require_relative 'cracker'
+require_relative 'printer'
 
-class Crack
-
-  def self.input_file
-    raise ArgumentError, "I need a file to read!" if ARGV[0] == nil #|| ARGV[0] != #filetype?
-    ARGV[0]
-  end
-
-  def self.output_file
-    raise ArgumentError, "I need a file to write to!" if ARGV[1] == nil #|| ARGV[1] != #filetype?
-    ARGV[1]
-  end
+class Crack < Printer
 
   def self.date
-    raise ArgumentError, "I need to know the date that this message was encrypted! (ddmmyy)" if ARGV[2] == nil || ARGV[2].length != 6
     ARGV[2]
   end
 
-  def self.message_to_crack(input_file)
-    file = File.open(input_file, "r")
-    file.readline.chomp
+  def self.check_for_errors
+    if ARGV.length != 3
+      self.incorrect_num_arguments_crack
+    end
   end
 
   def self.decrypt_the_message(input_file)
-    cracker = Cracker.new(self.message_to_crack(input_file), self.date)
+    cracker = Cracker.new(self.retrieve_message(input_file), self.date)
     @cracked_message = cracker.crack
+    binding.pry
     @key = cracker.key
   end
 
   def self.write_to_file(output_file)
+    file = self.get_ready_to_write(output_file)
     self.decrypt_the_message(self.input_file)
-    file = File.open(output_file, "w")
     file.write(@cracked_message)
   end
 
   def self.print
+    self.check_for_errors
     self.write_to_file(self.output_file)
     puts "Created #{self.output_file} with the key #{@key} and date #{self.date}"
   end

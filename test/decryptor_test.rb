@@ -38,6 +38,21 @@ class DecryptorTest < Minitest::Test
     assert_equal group, decryptor.group_by_4
   end
 
+  def test_it_rotates_group_of_4
+    decryptor = Decryptor.new("2.ql", "41521", "020315")
+    assert_equal [["r", "u", "b", "y"]], decryptor.rotate_chars
+  end
+
+  def test_it_rotates_group_of_eight
+    decryptor = Decryptor.new("2.qli23i", "41521", "020315")
+    assert_equal [["r", "u", "b", "y"], [" ", "l", "o", "v"]], decryptor.rotate_chars
+  end
+
+  def test_it_rotates_uneven_message
+    decryptor = Decryptor.new("2.qli23ip", "41521", "020315")
+    assert_equal [["r", "u", "b", "y"], [" ", "l", "o", "v"], ["e"]], decryptor.rotate_chars
+  end
+
   def test_it_decrypts_message
     decryptor = Decryptor.new("2.qli23ip", "41521", "020315")
     assert_equal "ruby love", decryptor.decrypted_message

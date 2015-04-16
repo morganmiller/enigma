@@ -2,13 +2,13 @@ require_relative 'decryptor'
 require 'pry'
 
 class Cracker
-  attr_accessor :key
+
+  attr_reader :key
 
   def initialize(message_to_crack, date)
     @original = message_to_crack
     @message_to_crack = message_to_crack
     @date = date
-    @rotator = Rotator.new(date)
     @key = '9999'
   end
 
