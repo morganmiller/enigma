@@ -4,6 +4,8 @@ require_relative 'date_offset'
 
 class Encryptor
 
+  attr_reader :key, :date
+
   def initialize(message_to_encrypt, key = KeyOffset.new.key, date = DateOffset.new.date)
     @message_to_encrypt = message_to_encrypt
     @date = date
@@ -23,14 +25,6 @@ class Encryptor
 
   def encrypted_message
     rotate_chars.flatten.join()
-  end
-
-  def key
-    @key
-  end
-
-  def date
-    @date
   end
 
 end
